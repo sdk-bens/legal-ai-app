@@ -1,70 +1,94 @@
-# Getting Started with Create React App
+# Legal-AI-App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+Welcome to the NLP Web Application project! This repository contains the code for developing a web application that serves as both the front end and back end for a Natural Language Processing (NLP) project that we have been working on recently.
 
-In the project directory, you can run:
+## Project Overview
 
-### `npm start`
+This project aims to create a user-friendly interface for our NLP project, allowing users to interact with NLP models and algorithms. The application will perform various NLP tasks such as text classification, sentiment analysis, language translation, and more.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Getting Started
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+To set up and run this web application on your local machine, follow these steps:
 
-### `npm test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Python (version 3.6 or higher)
+- FastAPI
+- HTML/CSS/JavaScript knowledge (for frontend customization)
 
-### `npm run build`
+### Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone this repository to your local machine.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   git clone https://github.com/sdk-bens/AI-Legal-Assistant-Web.git <-- This is Deprecated
+   ```
+   Use this:
+   
+```bash
+   git clone https://username:token@github.com/sdk-bens/AI-Legal-Assistant-Web.git
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. Create a virtual environment (recommended).
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   python -m venv venv
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. Activate the virtual environment.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   - On Windows:
 
-## Learn More
+     ```bash
+     venv\Scripts\activate
+     ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   - On macOS and Linux:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+     ```bash
+     source venv/bin/activate
+     ```
 
-### Code Splitting
+5. Install the required Python packages.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### Analyzing the Bundle Size
+### Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Modify the configuration files (`config.py`) to set up any API keys, database connections, or other environment-specific settings.
 
-### Making a Progressive Web App
+### Running the Application
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Start the Flask development server.
 
-### Advanced Configuration
+   ```bash
+   flask run
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+2. Access the application in your web browser at `http://localhost:5000`.
 
-### Deployment
+## Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+The project structure is organized as follows:
 
-### `npm run build` fails to minify
+- `app/`: Contains the Flask application code.
+- `static/`: Stores static assets such as CSS, JavaScript, and images for the frontend.
+- `templates/`: Contains HTML templates for rendering web pages.
+- `config.py`: Configuration file for application settings.
+- `requirements.txt`: Lists the Python dependencies for the project.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contributing
+
+Contributions to this project are currently not accepted as it is a closed-source application.
+
+## Contact
+
+If you have any questions or need further assistance, please feel free to contact us at [your@email.com](mailto:your@email.com).
+
+Thank you for your interest in our NLP Web Application project! We appreciate your usage and support.
+
