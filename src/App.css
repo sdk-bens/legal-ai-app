@@ -1,0 +1,330 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+/* Custom CSS */
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Pushes the inner content to the sides */
+  padding: 20px;
+}
+
+.logo {
+  width: 160px; /* Larger logo size */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 20px;
+}
+
+.line {
+  border-left: 1px solid #5a5a5a; /* Line color */
+  height: 80px; /* Adjusted height */
+  margin: 0 20px;
+}
+
+.text-box {
+  color: #000000; /* Text color */
+  font-family: "Lato", sans-serif;
+  font-size: small;
+}
+
+.about-text {
+  font-size: 27px;
+  color: #0b8261;
+}
+
+.forms-to-fill-out {
+  font-size: 27px;
+  color: #0b8261;
+}
+
+.chat-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh; /* Increase the height as needed */
+  margin-top: 20px; /* Add margin to the top */
+  position: relative;
+}
+
+.outer-box {
+  background-color: #f5f5f5;
+  /* box-shadow: 0px 4px 8px rgba(0.5, 0.5, 0.5, 0.7);  */
+  box-shadow: 0px -4px 8px rgba(0.5, 0.5, 0.5, 0.7);
+  padding: 30px; /* Static padding */
+  margin: 0 auto; /* Center the box horizontally */
+  width: 100%; /* Full width */
+  max-width: 100%; /* Adjust the max-width as needed */
+  height: 100%; /* Adjust the height as needed */
+  box-sizing: border-box; /* Include padding in total width */
+  font-family: "Lato", sans-serif; /* Apply Lato font family */
+  font-size: small;
+  /* font-weight: 400; */
+}
+
+.inner-box {
+  background-color: white;
+  padding: 20px;
+  /* border-radius: 5px; */
+  height: calc(100% - 10px); /* Adjusted height */
+  overflow: auto;
+  box-sizing: border-box; /* Include padding in total width */
+}
+
+.new-box {
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); /* Darker shadow */
+  padding: 20px; /* Static padding */
+  width: 100%; /* Full width */
+  max-width: 100%; /* Adjust the max-width as needed */
+  height: 16vh; /* Fixed height */
+  box-sizing: border-box; /* Include padding in total width */
+  font-family: "Lato", sans-serif; /* Apply Lato font family */
+  position: relative;
+}
+
+.svg-image {
+  position: absolute;
+  top: 0;
+  left: 35px; /* Add margin from the left */
+  width: 120px; /* Increase width to make the image bigger */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* New styles for the inner content */
+.inner-content {
+  display: flex;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.dropdown-box {
+  margin-left: 15px;
+  background-color: #f5f5f5;
+  padding: 10px;
+  border: none;
+  color: #0b8261;
+  font-family: "Lato", sans-serif;
+  font-size: small;
+  width: 248px;
+  height: 36px;
+}
+.top-right-content {
+  position: fixed;
+  top: 20px; /* Adjust the top position as needed */
+  right: 20px; /* Adjust the right position as needed */
+  z-index: 1000; /* Adjust the z-index to ensure it's on top of other elements */
+  background-color: rgba(255, 255, 255, 0.8); /* Background color with transparency */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+}
+
+/* Styles for smaller devices */
+@media (max-width: 768px) {
+  .dropdown-box {
+    width: 10%;  /* or any other value that suits your design */
+    /* Other adjustments for small devices, if necessary */
+  }
+}
+
+.textarea-box {
+  flex: 1;
+  margin-left: 20px;
+  background-color: #f5f5f5;
+  padding: 10px;
+  border: none;
+  color: black;
+  font-family: "Lato", sans-serif;
+  font-size: small;
+  resize: none;
+  height: 36px;
+}
+textarea::placeholder {
+  color: grey; /* Set placeholder text color to light gray */
+}
+
+.icons-box {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+
+.icons-box img {
+  width: 32px; /* Adjust the width as needed */
+  height: 32px; /* Adjust the height as needed */
+  margin-right: 10px; /* Add margin between icons */
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.user-message {
+  background-color: #f2f9f4; /* Green background */
+  color: #0b8261; /* Font color */
+  padding: 10px; /* Add some padding for spacing */
+  margin: 10px 0; /* Add margin to separate messages */
+  border-radius: 5px; /* Add rounded corners */
+  font-weight: bold;
+  font-family: "Lato", sans-serif;
+}
+.bot-message {
+  display: flex; /* Display as a flex container */
+  align-items: center; /* Align items vertically */
+  margin: 10px 0; /* Add margin to separate messages */
+}
+
+.bot-icon {
+  width: 36px; /* Set the desired width */
+  height: 36px; /* Set the desired height */
+  margin-right: 10px; /* Add margin between icon and message */
+}
+
+.message-text {
+  position: relative;
+  flex: 1; /* Expand to fill available space */
+  font-weight: bold;
+  font-family: "Lato", sans-serif;
+  border-radius: 10px; /* Adjust as needed */
+  flex-grow: 1; /* This allows message-text to take up the remaining space after bot-icon */
+  padding: 10px; /* Adjust as needed */
+}
+.chat-content {
+  overflow: auto;
+  height: calc(
+    100% - 10px
+  ); /* Set the desired height for the chat content */
+}
+
+.microphone-icon {
+  cursor: pointer;
+  margin-right: 10px;
+  transition: filter 0.3s; /* Smooth transition effect for filter property */
+}
+
+.recording {
+  filter: grayscale(100%); /* Change icon color to grey when recording */
+}
+mute-button {
+  filter: grayscale(100%);
+  /* Add your styling for the unmuted appearance */
+  /* Change cursor to indicate clickability */
+  /* Add other styles as needed */
+}
+
+/* Style for the mute button when muted (grey color) */
+.mute-button.muted {
+  /* Add your styling for the muted appearance */
+  /* Apply grayscale effect to make it greyed */
+  /* Add other styles as needed */
+  filter: none; /* Remove grayscale effect for original color */
+  cursor: pointer;
+}
+
+.bot-icon img {
+  vertical-align: top; /* Align the image to the top of its div */
+}
+
+.bot-response {
+  display: flex;
+  align-items: flex-start; /* Align child divs to the top of the parent div */
+}
+
+#ratingOptions {
+  display: none;
+  position: absolute;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 5px;
+  border-radius: 5px;
+  white-space: nowrap; /* Keeps it in one line */
+  top: 0; /* Position it at the top edge of messageDiv */
+  right: 0; /* Position it at the right edge of messageDiv */
+}
+
+#ratingOptions span {
+  margin: 0 10px;
+  cursor: pointer;
+}
+.footer {
+  text-align: center;
+}
+
+
+/* Add this CSS to your stylesheets */
+.forms-button {
+  padding: 10px 10px;
+  background-color: #20b98b;
+  
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.forms-button:hover {
+  background-color: #0056b3;
+}
+
+
+.button-container {
+  display: flex;
+  gap: 10px; /* Add some spacing between the buttons */
+}
+
+
+
+.spin-icon {
+  transition: transform 0.5s ease-in-out;
+}
+
+.spin-icon.rotated {
+  transform: rotate(180deg); /* You can adjust the degree for the desired rotation. */
+}
