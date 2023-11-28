@@ -11,6 +11,7 @@ function Forms() {
         <Routes>
           <Route path="/landlordForms" element={<LandlordForms />} />
           <Route path="/tenantForms" element={<TenantForms />} />
+          <Route path="/forms-auto-filling" element={<FormComponent />} />
           <Route
             path="/"
             element={

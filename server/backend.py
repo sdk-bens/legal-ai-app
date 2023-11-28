@@ -4,6 +4,10 @@ from gridfs import GridFS
 from io import BytesIO
 import os
 from pathlib import Path
+from fastapi import Depends
+
+
+
 
 
 from starlette.responses import JSONResponse
@@ -15,7 +19,7 @@ from urllib.parse import unquote
 
 app = FastAPI(
     title="Legal AID",  
-    description="Documentation for all APIs used in Legal AID app",
+    description="Documentation for all forms related APIs used in Legal AID app",
     version="1.0.0",
 )
 
@@ -30,61 +34,75 @@ app.add_middleware(
 )
 
 # MongoDB connection details
-username = 'username'
-password = 'pdfforms'
-cluster_url = 'your_cluster_url'
-database = 'PdfForms'
+username = 'seddik'
+password = 'benaissa'
+cluster = 'cluster0'
+forms_database = 'PdfForms'
+users_database = 'users_data'
 
-mongo_uri = f"mongodb+srv://{username}:{password}@pdfforms.pjqmkzp.mongodb.net/?retryWrites=true&w=majority"
+
+
+mongo_uri = f"mongodb+srv://{username}:{password}@{cluster}.d6evyg2.mongodb.net/?retryWrites=true&w=majority"
+
 
 client = MongoClient(mongo_uri)
-db = client.get_database("PdfForms")
+db = client.get_database(forms_database)
+users_db = client.get_database(users_database)
+
+
+# Create a GridFS instance for tenant forms in the selected database
+tenantForms = GridFS(db, collection="tenantForms")
+
+# Create a GridFS instance for landlord forms in the selected database
+landlordForms = GridFS(db, collection="landlordForms")
+
 fs = GridFS(db)
 
-tenant_forms_collection = GridFS(db, collection="tenant-forms")
 
-
-
-
-
-# upload files from comoputer to cloud
-@app.post("to_cloud")
-def upload_pdf_to_cloud(folder_path: str):
-   
-    # Check wether the fodler exists or not
-   if os.path.exists(folder_path) and os.path.isdir(folder_path):
-
-    # List all files and directories in the specified folder
-    contents = os.listdir(folder_path)
-
-    with open(folder_path, 'rb') as pdf_file:
-        for i in contents:
-            # upload folder's content (Pdfs)  to the cloud
-            file_id = tenant_forms_collection.put(pdf_file, filename=i)
-    
-
-
-# @app.get("get_file_names")
-# def get_files_names(folder_path):
-
-#     #Check if the folder exists
-#     if os.path.exists(folder_path) and os.path.isdir(folder_path):
-#         # List the contents of the folder
-#         folder_contents = os.listdir(folder_path)
-
-#         # You can filter the contents or process them as needed
-#         for item in folder_contents:
-#             # print(item)  # This will print the names of the items in the folder
-#             pass
-#     else:
-#         print(f"The folder '{folder_path}' does not exist.")
-
-
-# fetch the pdf form from cloud to be dislayed on the webpage.
-@app.get("/get_form/{file_name}")
-async def get_form(file_name: str):
+@app.post("/upload_forms_to_cloud")
+def upload(folder_path: str, category: str):
     try:
-        file_data = fs.find_one({"filename": file_name})
+        if category.lower() not in ('tenant', 'landlord'):
+            return JSONResponse(content={"message": "Category must be 'tenant' or 'landlord'"}, status_code=400)
+
+        if not os.path.exists(folder_path):
+            return JSONResponse(content={"message": f"Folder '{folder_path}' does not exist"}, status_code=400)
+
+        # Determine the GridFS collection based on the category
+        if category.lower() == "tenant":
+            gridfs_collection = GridFS(db, collection="tenantForms")
+        else:
+            gridfs_collection = GridFS(db, collection="landlordForms")
+
+        # Upload new files
+        uploaded_files = []
+
+        for root, _, files in os.walk(folder_path):
+            for file_name in files:
+                file_path = os.path.join(root, file_name)
+
+                # Check if the file already exists in the collection
+                if gridfs_collection.find_one({"filename": file_name}):
+                    continue  # Skip uploading existing files
+
+                # Open the file in binary mode
+                with open(file_path, 'rb') as file:
+                    # Read the binary data
+                    file_data = file.read()
+
+                # Store the binary data in MongoDB using GridFS
+                file_id = gridfs_collection.put(file_data, filename=file_name)
+                uploaded_files.append((file_name, str(file_id)))
+
+        return JSONResponse(content={"message": "Files uploaded to MongoDB", "uploaded_files": uploaded_files}, status_code=200)
+
+    except Exception as e:
+        return JSONResponse(content={"message": f"An error occurred: {str(e)}"}, status_code=500)
+
+
+def get_form(collection, file_name):
+    try:
+        file_data = collection.find_one({"filename": file_name})
         if file_data is not None:
             pdf_content = file_data.read()
             # Return the PDF file as binary data
@@ -94,13 +112,29 @@ async def get_form(file_name: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.get("/get_landlord_form/{file_name}")
+async def get_landlord_form(file_name: str):
+    return get_form(landlordForms, file_name)
 
-# fetch existing files names and display them in the dropdown menu 
-collection = db["fs.files"]
-documents = collection.find({})
+@app.get("/get_tenant_form/{file_name}")
+async def get_tenant_form(file_name: str):
+    return get_form(tenantForms, file_name)
+
+
+# Fetch existing files names and display them in the dropdown menu 
 @app.get("/get_form_options")
-def get_form_options():
+def get_form_options(category: str):
+    
+
+    if category.lower() not in ('tenant', 'landlord'):
+        return {"message": "Category must be 'tenant' or 'landlord"}
+    elif category.lower() == "tenant":
+        collection = db["tenantForms.files"]
+    elif category.lower() == "landlord":
+        collection = db["landlordForms.files"]
+
     try:
+        documents = collection.find({})
         file_names = []
         for document in documents:
             file_name = document.get("filename")
@@ -114,40 +148,18 @@ def get_form_options():
         raise HTTPException(status_code=500, detail="Internal Server Error")
     
 
-filled_forms = db["filled_forms"]
 
 
-@app.post("/save_pdf")
-async def save_pdf(pdf_file: UploadFile):
-    if pdf_file:
-        content = await pdf_file.read()
-        # Save the PDF to MongoDB
-        result = collection.insert_one({"file_data": content})
-        return JSONResponse(content={"message": "PDF uploaded successfully", "object_id": str(result.inserted_id)})
-    else:
-        return JSONResponse(content={"error": "No PDF file provided"}, status_code=400)
-    
-
-# TODO: finishing and testing the save to cloud api
-
-@app.post("/save_to_cloud/{form_name}")
-async def save_pdf_to_cloud(form_name: str, pdf_file: UploadFile):
-    # Ensure the form_name is a valid identifier (e.g., no special characters)
-    if not form_name.isalnum():
-        raise HTTPException(status_code=400, detail="Invalid form name")
-
+@app.post("/submit-form/{user_email}/{formToFill}")
+async def submit_form(user_email: str, formToFill: str, responses: dict, db=Depends(lambda: db)):
     try:
-        # Read the file content
-        pdf_content = await pdf_file.read()
+        # Use user_email as the collection name
+        user_collection = users_db[user_email]
 
-        # Save the file content to MongoDB
-        document = {
-            "form_name": form_name,
-            "pdf_content": pdf_content
-        }
-        inserted_id = tenant_forms_collection.insert_one(document).inserted_id
+        result = user_collection.insert_one({**responses, "form_name": formToFill})
 
-        return {"message": f"PDF saved to MongoDB with ID: {inserted_id}"}
-
+        return {"message": "Data submitted successfully", "id": str(result.inserted_id)}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to save PDF: {str(e)}")
+        print("Error:", e)  
+        raise HTTPException(status_code=500, detail=f"Error submitting data: {str(e)}")
+
