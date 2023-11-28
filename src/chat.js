@@ -29,6 +29,9 @@ const Chat = () => {
         <Link to="/tenantForms" className="forms-button">
           Tenant Forms
         </Link>
+        <Link to="/forms-auto-filling" className="forms-button">
+        Automated Form Filling
+        </Link>
        </div>
        
    

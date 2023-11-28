@@ -292,7 +292,7 @@ mute-button {
 }
 
 
-/* Add this CSS to your stylesheets */
+
 .forms-button {
   padding: 10px 10px;
   background-color: #20b98b;
@@ -306,8 +306,33 @@ mute-button {
   margin-top: 10px;
   margin-right: 10px;
   margin-left: 10px;
+  margin-bottom: 20px;
+}
+.responses-container {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-right: 200px;
+  margin-left: 200px;
+  margin-bottom: 20px;
+}
+
+.response-item {
   margin-bottom: 10px;
 }
+
+.response-key {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.response-value {
+  color: #333;
+}
+
 
 .forms-button:hover {
   background-color: #0056b3;
@@ -328,3 +353,30 @@ mute-button {
 .spin-icon.rotated {
   transform: rotate(180deg); /* You can adjust the degree for the desired rotation. */
 }
+
+
+
+
+/* Add this to your existing CSS file or create a new one */
+
+/*
+.dark-bg {
+  background-color: #333;
+  color: #fff; 
+} */
+
+/* Add this to set a default style for the body, ensuring it covers the entire viewport */
+/*
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #333; 
+  color: #fff; 
+}
+*/
+
+/* .App {
+  background-color: #333; 
+  color: #fff; 
+  min-height: 100vh; 
+} */
